@@ -1,11 +1,25 @@
-# Montaro Site
+# Montaro
 
-Landing page premium para a marca Montaro.
+Site profissional para uma marca de relojoaria masculina premium acessível.
 
-## Como usar
-Abra o arquivo `index.html` no navegador.
+## Direção
 
-## Antes de publicar
-1. Troque o número do WhatsApp nos links `wa.me/5543999999999`.
-2. Substitua os produtos, preços e fotos por imagens reais.
-3. Publique na Vercel, Netlify ou hospedagem desejada.
+- Público: homens de 35 a 60 anos
+- Posicionamento: elegante, maduro, confiável e sem aparência de catálogo genérico
+- Experiência: Home, Coleção, Produto, Sobre e Contato/WhatsApp
+- Stack: React, Vite, TypeScript e CSS responsivo, pronto para deploy na Vercel
+
+## Executar localmente
+
+```bash
+npm install
+npm run dev
+```
+
+## Validação
+
+```bash
+npm test
+npm run lint
+npm run build
+```

@@ -17,9 +17,10 @@ describe('Montaro premium watch site', () => {
     expect(screen.getAllByText('Presentes masculinos').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Envio rastreado').length).toBeGreaterThan(0);
     expect(screen.getByText('Garantia de funcionamento')).toBeInTheDocument();
-    expect(screen.getByText(/até 10x sem juros/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/até 10x sem juros/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/10% no Pix/i).length).toBeGreaterThan(0);
-    expect(screen.getByRole('heading', { name: /relógios com maior saída/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /prateleira principal/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /buscar por couro, aço, presente/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /condições especiais/i })).toBeInTheDocument();
     expect(screen.getAllByRole('link', { name: /whatsapp|falar com consultor|chamar no whatsapp/i })[0]).toHaveAttribute('href', expect.stringContaining('wa.me'));
   });
@@ -28,7 +29,7 @@ describe('Montaro premium watch site', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: /comprar coleção/i }));
+    await user.click(screen.getByRole('button', { name: /comprar relógios/i }));
     expect(screen.getByRole('heading', { level: 1, name: /relógios masculinos selecionados/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Filtrar' })).toBeInTheDocument();
     expect(screen.getByText('6 modelos')).toBeInTheDocument();

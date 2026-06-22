@@ -107,56 +107,66 @@ function Header({ page, cartCount, onNavigate }: { page: Page; cartCount: number
   };
 
   return (
-    <header className="site-header">
-      <button className="brand" type="button" onClick={() => goTo('home')} aria-label="Ir para a Home Montaro">
-        <img src="/brand/montaro-symbol.png" alt="" />
-        <span className="brand__text">
-          <strong>Montaro</strong>
-          <small>Relógios masculinos</small>
-        </span>
-      </button>
-      <nav className="site-nav" aria-label="Navegação principal">
-        {[
-          ['home', 'Home'],
-          ['collection', 'Coleção'],
-          ['collection', 'Mais vendidos'],
-          ['collection', 'Ofertas'],
-          ['about', 'Sobre'],
-          ['contact', 'Contato'],
-        ].map(([key, label]) => (
-          <button key={`${key}-${label}`} type="button" className={page === key ? 'is-active' : ''} onClick={() => goTo(key as Page)}>
-            {label}
-          </button>
-        ))}
-      </nav>
-      <button className="search-pill" type="button" onClick={() => goTo('collection')} aria-label="Buscar relógios">
-        <Search aria-hidden="true" />
-        <span>Buscar</span>
-      </button>
-      <button className="cart-pill" type="button" onClick={() => goTo('collection')} aria-label={`Sacola com ${cartCount} itens`}>
-        <ShoppingBag aria-hidden="true" />
-        <span>{cartCount}</span>
-      </button>
-      <WhatsAppButton label="WhatsApp" tone="ghost" message="Olá, Montaro. Gostaria de escolher um relógio masculino." />
-      <button
-        className="menu-button"
-        type="button"
-        aria-label="Menu"
-        aria-expanded={isMenuOpen}
-        onClick={() => setIsMenuOpen((value) => !value)}
-      >
-        <Menu aria-hidden="true" />
-      </button>
-      {isMenuOpen && (
-        <div className="mobile-panel">
-          <button type="button" onClick={() => goTo('home')}>Home</button>
-          <button type="button" onClick={() => goTo('collection')}>Coleção</button>
-          <button type="button" onClick={() => goTo('about')}>Sobre</button>
-          <button type="button" onClick={() => goTo('contact')}>Contato</button>
-          <WhatsAppButton label="Falar no WhatsApp" tone="gold" message="Olá, Montaro. Quero conhecer os relógios disponíveis." />
-        </div>
-      )}
-    </header>
+    <>
+      <div className="commerce-topbar" aria-label="Condições comerciais">
+        <span><Truck aria-hidden="true" /> Envio rastreado</span>
+        <span><CreditCard aria-hidden="true" /> 10x sem juros</span>
+        <span><Percent aria-hidden="true" /> 10% no Pix</span>
+        <span><UserRoundCheck aria-hidden="true" /> Atendimento</span>
+      </div>
+      <header className="site-header">
+        <button className="brand" type="button" onClick={() => goTo('home')} aria-label="Ir para a Home Montaro">
+          <img src="/brand/montaro-symbol.png" alt="" />
+          <span className="brand__text">
+            <strong>Montaro</strong>
+            <small>Relógios masculinos</small>
+          </span>
+        </button>
+        <nav className="site-nav" aria-label="Navegação principal">
+          {[
+            ['home', 'Início'],
+            ['collection', 'Relógios'],
+            ['collection', 'Couro'],
+            ['collection', 'Aço'],
+            ['collection', 'Ofertas'],
+            ['about', 'Sobre'],
+            ['contact', 'Contato'],
+          ].map(([key, label]) => (
+            <button key={`${key}-${label}`} type="button" className={page === key ? 'is-active' : ''} onClick={() => goTo(key as Page)}>
+              {label}
+            </button>
+          ))}
+        </nav>
+        <button className="search-pill" type="button" onClick={() => goTo('collection')} aria-label="Buscar relógios">
+          <Search aria-hidden="true" />
+          <span>Buscar modelo</span>
+        </button>
+        <button className="cart-pill" type="button" onClick={() => goTo('collection')} aria-label={`Sacola com ${cartCount} itens`}>
+          <ShoppingBag aria-hidden="true" />
+          <span>{cartCount}</span>
+        </button>
+        <WhatsAppButton label="WhatsApp" tone="ghost" message="Olá, Montaro. Gostaria de escolher um relógio masculino." />
+        <button
+          className="menu-button"
+          type="button"
+          aria-label="Menu"
+          aria-expanded={isMenuOpen}
+          onClick={() => setIsMenuOpen((value) => !value)}
+        >
+          <Menu aria-hidden="true" />
+        </button>
+        {isMenuOpen && (
+          <div className="mobile-panel">
+            <button type="button" onClick={() => goTo('home')}>Início</button>
+            <button type="button" onClick={() => goTo('collection')}>Relógios</button>
+            <button type="button" onClick={() => goTo('collection')}>Ofertas</button>
+            <button type="button" onClick={() => goTo('about')}>Sobre</button>
+            <button type="button" onClick={() => goTo('contact')}>Contato</button>
+            <WhatsAppButton label="Falar no WhatsApp" tone="gold" message="Olá, Montaro. Quero conhecer os relógios disponíveis." />
+          </div>
+        )}
+      </header>
+    </>
   );
 }
 
@@ -167,6 +177,7 @@ function HomePage({ onNavigate, onOpenProduct, onAddProduct }: {
 }) {
   const heroProduct = products[1];
   const quickProducts = products.filter((product) => product.bestseller).slice(0, 3);
+  const shelfProducts = products.filter((product) => product.bestseller || product.featured).slice(0, 6);
 
   return (
     <>
@@ -186,7 +197,7 @@ function HomePage({ onNavigate, onOpenProduct, onAddProduct }: {
           <p>Relógios para homens que valorizam elegância, maturidade e confiança em cada detalhe.</p>
           <div className="hero__actions">
             <button className="button button--gold" type="button" onClick={() => onNavigate('collection')}>
-              Comprar coleção <ArrowRight aria-hidden="true" />
+              Comprar relógios <ArrowRight aria-hidden="true" />
             </button>
             <WhatsAppButton tone="ghost" label="Falar com consultor" message="Olá, Montaro. Quero conhecer a coleção de relógios." />
           </div>
@@ -233,29 +244,48 @@ function HomePage({ onNavigate, onOpenProduct, onAddProduct }: {
         <span><ShieldCheck aria-hidden="true" /> Compra assistida</span>
       </section>
 
-      <section className="story">
-        <div>
-          <p className="eyebrow">Postura antes da palavra</p>
-          <h2>Um bom relógio não grita. Ele comunica postura, história e bom gosto antes mesmo da primeira palavra.</h2>
+      <section className="storefront" aria-label="Vitrine de compra Montaro">
+        <div className="storefront__bar">
+          <div>
+            <p className="eyebrow">Loja Montaro</p>
+            <h2>Compre por estilo, acabamento ou ocasião.</h2>
+          </div>
+          <button className="store-search" type="button" onClick={() => onNavigate('collection')}>
+            <Search aria-hidden="true" />
+            <span>Buscar por couro, aço, presente...</span>
+          </button>
         </div>
-        <p>
-          A Montaro nasce para homens que já passaram da fase de provar tudo para todos. Nossa curadoria privilegia modelos sóbrios, versáteis e bem acabados, feitos para acompanhar trabalho, família, encontros e conquistas com naturalidade.
-        </p>
-      </section>
 
-      <section className="shop-window">
-        <div className="shop-window__copy">
-          <p className="eyebrow">Loja Montaro</p>
-          <h2>Escolha por ocasião, acabamento e intenção de presença.</h2>
-          <p>Uma loja inspirada na clareza dos grandes e-commerces de relógio, mas com uma curadoria menor, masculina e mais fácil de decidir.</p>
-        </div>
-        <div className="shop-window__links">
-          {['Executivo', 'Premium', 'Casual', 'Presente'].map((style) => (
-            <button key={style} type="button" onClick={() => onNavigate('collection')}>
-              <span>{style}</span>
-              <ArrowRight aria-hidden="true" />
-            </button>
-          ))}
+        <div className="storefront__layout">
+          <aside className="storefront__filters" aria-label="Filtros rápidos">
+            <strong>Comprar por</strong>
+            {collections.map((collection) => (
+              <button key={collection.key} type="button" onClick={() => onNavigate('collection')}>
+                {collection.name}
+              </button>
+            ))}
+            <strong>Condição</strong>
+            <button type="button" onClick={() => onNavigate('collection')}>Ofertas da semana</button>
+            <button type="button" onClick={() => onNavigate('collection')}>Mais vendidos</button>
+            <button type="button" onClick={() => onNavigate('collection')}>Até R$ 500</button>
+          </aside>
+
+          <div className="storefront__products">
+            <div className="shelf-heading">
+              <div>
+                <span>{products.length} modelos curados</span>
+                <h3>Prateleira principal</h3>
+              </div>
+              <button type="button" onClick={() => onNavigate('collection')}>
+                Ver todos <ArrowRight aria-hidden="true" />
+              </button>
+            </div>
+            <div className="product-grid product-grid--storefront">
+              {shelfProducts.map((product) => (
+                <ProductCard key={product.id} product={product} onOpen={onOpenProduct} onAdd={onAddProduct} />
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -272,20 +302,6 @@ function HomePage({ onNavigate, onOpenProduct, onAddProduct }: {
               <span>{collection.name}</span>
               <p>{collection.description}</p>
             </button>
-          ))}
-        </div>
-      </section>
-
-      <section className="featured">
-        <SectionHeading
-          eyebrow="Mais vendidos"
-          title="Relógios com maior saída na curadoria."
-          text="Vitrine enxuta com preço claro, Pix, parcelamento e estoque visível."
-          light
-        />
-        <div className="product-grid">
-          {products.filter((product) => product.bestseller || product.featured).slice(0, 4).map((product) => (
-            <ProductCard key={product.id} product={product} onOpen={onOpenProduct} onAdd={onAddProduct} />
           ))}
         </div>
       </section>
@@ -313,6 +329,16 @@ function HomePage({ onNavigate, onOpenProduct, onAddProduct }: {
             </article>
           ))}
         </div>
+      </section>
+
+      <section className="story">
+        <div>
+          <p className="eyebrow">Postura antes da palavra</p>
+          <h2>Um bom relógio não grita. Ele comunica postura, história e bom gosto antes mesmo da primeira palavra.</h2>
+        </div>
+        <p>
+          A Montaro nasce para homens que já passaram da fase de provar tudo para todos. Nossa curadoria privilegia modelos sóbrios, versáteis e bem acabados, feitos para acompanhar trabalho, família, encontros e conquistas com naturalidade.
+        </p>
       </section>
 
       <TrustSection />
